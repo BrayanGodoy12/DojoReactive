@@ -11,5 +11,4 @@ import java.util.LinkedList;
 public class Enterprise {
     private boolean validity;
     private LinkedList<Restrictions> restrictions;
-
 }

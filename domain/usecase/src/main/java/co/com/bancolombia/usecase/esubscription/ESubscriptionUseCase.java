@@ -28,8 +28,9 @@ public class ESubscriptionUseCase {
                         (e2) -> new SubscriptionNotCreateException(e2.getMessage()));
     }
 
+
     private EnterpriseValidation setInfoToValidation(Tuple3<CreditState, EnterpriseReports, EnterpriseValidation> tuple) {
-        return tuple.getT3().toBuilder()
+        return EnterpriseValidation.builder()
                 .enterprise(tuple.getT3().getEnterprise())
                 .creditState(tuple.getT1())
                 .enterpriseReports(tuple.getT2())
@@ -47,6 +48,7 @@ public class ESubscriptionUseCase {
         return enterpriseService.searchRestrictions(enterpriseValidation.getEnterprise())
                 .map(enterpriseFind -> enterpriseValidation.toBuilder()
                         .enterprise(enterpriseValidation.getEnterprise())
+                        .nitIsValidity(enterpriseValidation.isNitIsValidity())
                         .hasRestrictions(enterpriseFind.getRestrictions().size() != 0)
                         .build());
     }
