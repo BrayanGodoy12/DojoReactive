@@ -45,12 +45,9 @@ public class ESubscriptionUseCase {
 
     private Mono<EnterpriseValidation> searchRestrictionsEnterprise(EnterpriseValidation enterpriseValidation) {
         return enterpriseService.searchRestrictions(enterpriseValidation.getEnterprise())
-                .map(enterpriseFind -> {
-                    boolean hasRestrictions = enterpriseFind.getRestrictions().size() != 0;
-                    return enterpriseValidation.toBuilder()
-                            .enterprise(enterpriseValidation.getEnterprise())
-                            .hasRestrictions(hasRestrictions)
-                            .build();
-                });
+                .map(enterpriseFind -> enterpriseValidation.toBuilder()
+                        .enterprise(enterpriseValidation.getEnterprise())
+                        .hasRestrictions(enterpriseFind.getRestrictions().size() != 0)
+                        .build());
     }
 }
